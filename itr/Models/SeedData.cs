@@ -11,7 +11,7 @@ namespace itr.Models
 {
     public class SeedData
     {
-        public static async void Initialize(IServiceProvider serviceProvider)
+        public static async Task Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new itrContext(serviceProvider.GetRequiredService<DbContextOptions<itrContext>>()))
             {

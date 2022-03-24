@@ -22,7 +22,6 @@
                 @Html.Raw(item.Description)
             </div>
             <p>
-                <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-primary addToCart">Add to cart</a>
             </p>
         </div>
     }
@@ -35,32 +34,3 @@
     }
 
 </div>
-
-@section Scripts {
-
-    <script>
-    $(function () {
-
-        $("a.addToCart").click(function (e) {
-            e.preventDefault();
-
-            let id = $(this).data("id");
-
-            $.get('/cart/add/' + id, {}, function (data) {
-                $("div.smallcart").html(data);
-                ajaxDiv.find("img").addClass("d-none");
-                ajaxDiv.find("p").removeClass("d-none");
-                setTimeout(() => {
-                    ajaxDiv.animate({ opacity: 0 }, function () {
-                        $(this).addClass("d-none").fadeTo(.1, 1);
-                        $(this).find("img").removeClass("d-none");
-                        $(this).find("p").addClass("d-none");
-                    });
-                });
-            });
-        });
-
-    });
-    </script>
-
-}

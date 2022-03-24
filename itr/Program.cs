@@ -25,7 +25,7 @@ namespace itr
                 {
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    SeedData.Initialize(services);
+                    await SeedData.Initialize(services);
                     await UsersInitializer.InitializeAsync(userManager, roleManager);
                 }
                 catch (Exception)

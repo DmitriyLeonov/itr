@@ -6,17 +6,16 @@
 
 <h1>Articles</h1>
 
-<p>
+@if(User.Identity.IsAuthenticated){
+    <p>
     <a asp-action="Create">Create New</a>
 </p>
+}
 <table class="table">
     <thead>
         <tr>
             <th>
                 Name
-            </th>
-            <th>
-                Price
             </th>
             <th>
                 Category
@@ -51,6 +50,6 @@
 </table>
 
 <div class="d-flex w-100 justify-content-center">
-    <pagination page-count="@ViewBag.TotalPages" page-target="/admin/articles" page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></pagination>
+    <pagination page-count="@ViewBag.TotalPages" page-target="/articles" page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></pagination>
 </div>
 

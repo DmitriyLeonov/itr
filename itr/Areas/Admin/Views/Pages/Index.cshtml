@@ -45,17 +45,3 @@
     </tbody>
 </table>
 
-@section Scripts {
-    <script>
-        $("table#pages tbody").sortable({
-            items: "tr:not(.home)",
-            placeholder: "ui-state-highlight",
-            update: function () {
-                let ids = $("table#pages tbody").sortable("serialize");
-                let url = "/admin/pages/reorder";
-
-                $.post(url, ids, function () { });
-            }
-        })
-    </script>
-}
