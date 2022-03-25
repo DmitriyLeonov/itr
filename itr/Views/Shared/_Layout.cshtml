@@ -26,10 +26,10 @@
                             <li class="nav-item ml-1">
                                 <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Hi, @User.Identity.Name, Log out</a>
                             </li>
-                            @if (User.IsInRole("admin") || User.IsInRole("editor"))
+                            @if (User.IsInRole("admin"))
                             {
                                 <li class="nav-item ml-1">
-                                    <a asp-area="Admin" asp-controller="Pages" asp-action="Index" class="btn btn-success">Admin Area</a>
+                                    <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="btn btn-success">Admin Area</a>
                                 </li>
                             }
                         }
@@ -45,7 +45,12 @@
                     </ul>
 
                     <ul class="navbar-nav flex-grow-1">
-                        @await Component.InvokeAsync("MainMenu")
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Pages" asp-action="Page" >About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Pages" asp-action="Page" >Contact</a>
+                        </li>
                     </ul>
                 </div>
             </div>
