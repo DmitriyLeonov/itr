@@ -33,11 +33,18 @@
 
             <div class="form-group">
                 <label asp-for="Image" class="control-label">Article Image</label>
-                <input asp-for="ImageUpload" class="form-control" />
+                <input multiple asp-for="ImageUpload" class="form-control" />
                 <img src="" id="imgpreview" class="pt-2" alt="" />
                 <span asp-validation-for="ImageUpload" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                @{
+                        for(int i = 1; i <= 5; i++)
+                        {
+                            <input type="radio" id = "Rank" name ="Rank" value="@i" />@i
+                        }
+                }    
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

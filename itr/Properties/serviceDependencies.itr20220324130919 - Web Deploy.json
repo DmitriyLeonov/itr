@@ -2,7 +2,7 @@
   "dependencies": {
     "mssql1": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/itrdbserver/databases/itr_db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/itrdbserver1/databases/itr_db",
       "type": "mssql.azure",
       "connectionId": "ConnectionStrings:itrContext"
     }

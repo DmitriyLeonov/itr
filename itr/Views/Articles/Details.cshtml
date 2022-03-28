@@ -46,9 +46,43 @@
         <dd class = "col-sm-10">
             <img src="~/media/articles/@Model.Image" width="200" alt="" />
         </dd>
+        <dd class = "col-sm-10">
+                @{
+                    @Model.UsersRating
+                }
+                @{
+                    using (Html.BeginForm("SetRating", "Rating"))
+                    {
+                        <fieldset class="rating">
+                            @Html.HiddenFor(x => x.Id)
+                             <input type="radio" id="star5" name="Rating" value="5" />
+                             <label for="star5">5 stars</label>
+                             <input type="radio" id="star4" name="Rating" value="4" />
+                             <label for="star4">4 stars</label>
+                             <input type="radio" id="star3" name="Rating" value="3" />
+                             <label for="star3">3 stars</label>
+                             <input type="radio" id="star2" name="Rating" value="2" />
+                             <label for="star2">2 stars</label>
+                             <input type="radio" id="star1" name="Rating" value="1" />
+                             <label for="star1">1 star</label>
+                        </fieldset>
+                        <input type="submit" value="Rate"/>
+                    }
+                }    
+                @Model.Likes
+            @{
+                using (Html.BeginForm("SetLike", "Like"))
+                {
+                    @Html.HiddenFor(x=>x.Id)
+                    <input type="image" src="~/images/Favorite_64px.png" height="26px" width="26px" value="Like"/>
+                }
+            }
+        </dd>
     </dl>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+

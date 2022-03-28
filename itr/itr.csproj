@@ -20,6 +20,18 @@
     <Compile Include="Migrations\20191107084810_ThirdCreate.Designer.cs" />
     <Compile Include="Migrations\20191112101405_IdentityCreate.cs" />
     <Compile Include="Migrations\20191112101405_IdentityCreate.Designer.cs" />
+    <Compile Include="Migrations\20220327141754_userName.cs" />
+    <Compile Include="Migrations\20220327141754_userName.Designer.cs" />
+    <Compile Include="Migrations\20220327154542_Rating.cs" />
+    <Compile Include="Migrations\20220327154542_Rating.Designer.cs" />
+    <Compile Include="Migrations\20220327161840_userratings.cs" />
+    <Compile Include="Migrations\20220327161840_userratings.Designer.cs" />
+    <Compile Include="Migrations\20220327235117_Rating Users.cs" />
+    <Compile Include="Migrations\20220327235117_Rating Users.Designer.cs" />
+    <Compile Include="Migrations\20220328022433_Likes.cs" />
+    <Compile Include="Migrations\20220328022433_Likes.Designer.cs" />
+    <Compile Include="Migrations\20220328031056_Like.cs" />
+    <Compile Include="Migrations\20220328031056_Like.Designer.cs" />
     <Compile Include="Migrations\itrContextModelSnapshot.cs" />
   </ItemGroup>
 
@@ -35,10 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Articles\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <Folder Include="wwwroot\media\articles\" />
   </ItemGroup>
 
 

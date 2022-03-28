@@ -13,9 +13,12 @@ namespace itr.Infrastructure
         public itrContext(DbContextOptions<itrContext> options)
             :base(options)
         {
+            
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<ArticleRating> ArticleRatings { get; set; }
+        public DbSet<Like> Likes { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using itr.Infrastructure;
 using itr.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,25 +19,14 @@ namespace itr.Controllers
     {
         private readonly itrContext context;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly UserManager<AppUser> userManager;
 
-        public ArticlesController(itrContext context)
+        public ArticlesController(IWebHostEnvironment webhostEnvironment, UserManager<AppUser> userManager,  
+                                    itrContext context)
         {
+            webHostEnvironment = webhostEnvironment;
+            this.userManager = userManager;
             this.context = context;
-        }
-
-        // GET /Articles
-        public async Task<IActionResult> Index(int p = 1)
-        {
-            int pageSize = 6;
-            var articles = context.Articles.OrderByDescending(x => x.Id)
-                                            .Include(x => x.Category)
-                                            .Skip((p - 1) * pageSize)
-                                            .Take(pageSize);
-            ViewBag.PageNumber = p;
-            ViewBag.PageRange = pageSize;
-            ViewBag.TotalPages = (int)Math.Ceiling((decimal)context.Articles.Count() / pageSize);
-
-            return View(await articles.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int id)
@@ -46,7 +36,13 @@ namespace itr.Controllers
             {
                 return NotFound();
             }
-
+            var ratings = context.ArticleRatings.Where(x => x.articleId == id).Select(r => r.Rating).ToList();
+            var likes = context.Likes.Where(x => x.articleId == id).Select(r => r.UserName).ToList();
+            if (ratings.Count > 0)
+                article.UsersRating = Math.Round(ratings.Average(), 2);
+            else
+                article.UsersRating = 0;
+            article.Likes = likes.Count();
             return View(article);
         }
 
@@ -57,7 +53,7 @@ namespace itr.Controllers
             return View();
         }
 
-        // POST /admin/articles/create
+        // POST articles/create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Article article)
@@ -67,7 +63,8 @@ namespace itr.Controllers
             if (ModelState.IsValid)
             {
                 article.Slug = article.Name.ToLower().Replace(" ", "-");
-
+                var user = await userManager.GetUserAsync(User);
+                article.UserName = user.UserName;
                 var slug = await context.Articles.FirstOrDefaultAsync(x => x.Slug == article.Slug);
                 if (slug != null)
                 {
@@ -99,7 +96,7 @@ namespace itr.Controllers
             return View(article);
         }
 
-        // GET /admin/articles/edit/5
+        // GET articles/edit/5
         public async Task<IActionResult> Edit(int id)
         {
             Article article = await context.Articles.FindAsync(id);
@@ -113,7 +110,7 @@ namespace itr.Controllers
             return View(article);
         }
 
-        // POST /admin/articles/edit/5
+        // POST articles/edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Article article)
@@ -163,7 +160,7 @@ namespace itr.Controllers
             return View(article);
         }
 
-        // GET /admin/articles/delete/5
+        // GET articles/delete/5
         public async Task<IActionResult> Delete(int id)
         {
             Article article = await context.Articles.FindAsync(id);

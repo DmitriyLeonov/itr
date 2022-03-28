@@ -18,6 +18,10 @@ namespace itr.Models
 
         public string Slug { get; set; }
 
+        public string UserName { get; set; }
+
+        public double Rating { get; set; }
+
         [Required, MinLength(4, ErrorMessage = "Minimum length is 4")]
         public string Description { get; set; }
 
@@ -33,5 +37,11 @@ namespace itr.Models
         [NotMapped]
         [FileExtension]
         public IFormFile ImageUpload { get; set; }
+
+        public ICollection<ArticleRating> ArticleRatings { get; set; } = new HashSet<ArticleRating>();
+
+        [NotMapped]
+        public double UsersRating { get; set; }
+        public int Likes { get; set; }
     }
 }
