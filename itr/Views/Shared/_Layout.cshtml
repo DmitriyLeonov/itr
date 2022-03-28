@@ -11,41 +11,53 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">itr</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Articles" asp-action="ArticlesByCategory" asp-route-categorySlug = "фильмы">Фильмы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Articles" asp-action="ArticlesByCategory" asp-route-categorySlug = "игры">Игры</a>
+                    </li>
+                </ul>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
 
                             <li class="nav-item">
-                                <a asp-controller="Account" asp-action="Edit" class="btn btn-primary">My Account</a>
+                                <a asp-controller="Account" asp-action="Edit" class="btn btn-outline-primary">My Account</a>
                             </li>
                             <li class="nav-item ml-1">
-                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Hi, @User.Identity.Name, Log out</a>
+                                <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Hi, @User.Identity.Name, Log out</a>
                             </li>
-                            <li class="nav-item ml-1">
-                                    <a asp-controller="Account" asp-action="MyArticles" class="btn btn-success">My articles</a>
-                                </li>
+                            
                             @if (User.IsInRole("admin"))
                             {
                                 <li class="nav-item ml-1">
-                                    <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="btn btn-success">Admin Area</a>
+                                    <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="btn btn-outline-success">Admin Area</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item ml-1">
+                                    <a asp-controller="Account" asp-action="MyArticles" class="btn btn-outline-info">My articles</a>
                                 </li>
                             }
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a asp-controller="Account" asp-action="Login" class="btn btn-success">Log in</a>
+                                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-success">Log in</a>
                             </li>
                             <li class="nav-item ml-1">
-                                <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register</a>
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary">Register</a>
                             </li>
                         }
                     </ul>
@@ -57,9 +69,9 @@
         <main role="main" class="pb-3">
             <partial name="_NotificationPartial" />
             <div class="row">
-                <div class="col-3">
+                @*<div class="col-3">
                     @await Component.InvokeAsync("Categories")
-                </div>
+                </div>*@
                 <div class="col">
                     @RenderBody()
                 </div>

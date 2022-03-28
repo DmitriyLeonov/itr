@@ -40,7 +40,14 @@ namespace itr.Controllers
             ViewBag.PageNumber = p;
             ViewBag.PageRange = pageSize;
             ViewBag.TotalPages = (int)Math.Ceiling((decimal)context.Articles.Count() / pageSize);
-
+            foreach (var article in articles)
+            {
+                var ratings = context.ArticleRatings.Where(x => x.articleId == article.Id).Select(r => r.Rating).ToList();
+                if (ratings.Count > 0)
+                    article.UsersRating = Math.Round(ratings.Average(), 2);
+                else
+                    article.UsersRating = 0;
+            }
             return View(await articles.ToListAsync());
         }
 
@@ -58,6 +65,7 @@ namespace itr.Controllers
             else
                 article.UsersRating = 0;
             article.Likes = likes.Count();
+            context.SaveChanges();
             return View(article);
         }
 
@@ -91,7 +99,7 @@ namespace itr.Controllers
                 if (article.ImageUpload != null)
                 {
                     string uploadsDir = Path.Combine(webHostEnvironment.WebRootPath, "media/articles");
-                    imageName = Guid.NewGuid().ToString() + "_" + article.ImageUpload.FileName;
+                    imageName = article.ImageUpload.FileName;
                     string filePath = Path.Combine(uploadsDir, imageName);
                     FileStream fs = new FileStream(filePath, FileMode.Create);
                     await article.ImageUpload.CopyToAsync(fs);
