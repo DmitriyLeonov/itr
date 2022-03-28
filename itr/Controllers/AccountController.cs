@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using itr.Infrastructure;
 using itr.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -16,14 +17,17 @@ namespace itr.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private IPasswordHasher<AppUser> passwordHasher;
+        private readonly itrContext context;
 
         public AccountController(UserManager<AppUser> userManager, 
                                 SignInManager<AppUser> signInManager, 
-                                IPasswordHasher<AppUser> passwordHasher)
+                                IPasswordHasher<AppUser> passwordHasher,
+                                itrContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.passwordHasher = passwordHasher;
+            this.context = context;
         }
 
         // GET /account/register
@@ -135,6 +139,13 @@ namespace itr.Controllers
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> MyArticles()
+        {
+            AppUser appUser= await userManager.FindByNameAsync(User.Identity.Name);
+            var articles = context.Articles.Where(a => a.UserName == appUser.UserName).ToList();
+            return View(articles);
         }
     }
 }

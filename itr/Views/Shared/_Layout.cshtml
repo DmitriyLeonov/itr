@@ -22,12 +22,16 @@
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
+
                             <li class="nav-item">
                                 <a asp-controller="Account" asp-action="Edit" class="btn btn-primary">My Account</a>
                             </li>
                             <li class="nav-item ml-1">
                                 <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Hi, @User.Identity.Name, Log out</a>
                             </li>
+                            <li class="nav-item ml-1">
+                                    <a asp-controller="Account" asp-action="MyArticles" class="btn btn-success">My articles</a>
+                                </li>
                             @if (User.IsInRole("admin"))
                             {
                                 <li class="nav-item ml-1">
@@ -44,15 +48,6 @@
                                 <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register</a>
                             </li>
                         }
-                    </ul>
-
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pages" asp-action="Page" >About us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pages" asp-action="Page" >Contact</a>
-                        </li>
                     </ul>
                 </div>
             </div>

@@ -29,6 +29,21 @@ namespace itr.Controllers
             this.context = context;
         }
 
+        // GET /Articles
+        public async Task<IActionResult> Index(int p = 1)
+        {
+            int pageSize = 6;
+            var articles = context.Articles.OrderByDescending(x => x.Id)
+                                            .Include(x => x.Category)
+                                            .Skip((p - 1) * pageSize)
+                                            .Take(pageSize);
+            ViewBag.PageNumber = p;
+            ViewBag.PageRange = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling((decimal)context.Articles.Count() / pageSize);
+
+            return View(await articles.ToListAsync());
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             Article article = await context.Articles.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
