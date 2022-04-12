@@ -79,7 +79,7 @@ namespace itr.Controllers
         // POST articles/create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Article article)
+        public async Task<IActionResult> Create(Article article, int Rank)
         {
             ViewBag.CategoryId = new SelectList(context.Categories.OrderBy(x => x.Sorting), "Id", "Name");
 
@@ -105,7 +105,7 @@ namespace itr.Controllers
                     await article.ImageUpload.CopyToAsync(fs);
                     fs.Close();
                 }
-
+                article.Rating = Rank;
                 article.Image = imageName;
 
                 context.Add(article);
